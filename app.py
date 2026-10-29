@@ -31,7 +31,7 @@ def hello():
     name = request.args.get("name", "World").strip()
     if not name:
         return {"error": "Name must not be empty"}, 400
-    return {"message": f"Hello, {name}!"}
+    return {"message": f"Hey, {name}!"}
 
 
 if __name__ == "__main__":
