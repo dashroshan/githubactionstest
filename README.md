@@ -29,7 +29,7 @@ python -m pip install -r requirements.txt
 
 ## Start the web server
 
-In the same terminal:
+In the same terminal
 
 ```bash
 python app.py
