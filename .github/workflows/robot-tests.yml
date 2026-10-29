@@ -30,11 +30,8 @@ jobs:
       # Robot waits for /health before testing and fails the job if a test fails.
       - name: Start Flask and run Robot Framework tests
         run: |
-          mkdir -p results
-          python app.py > results/server.log 2>&1 &
-          server_pid=$!
-          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
-          python -m robot --outputdir results --xunit xunit.xml tests
+          python app.py &
+          python -m robot --outputdir results tests
 
       # Keep the reports available even when a test fails.
       - name: Upload test reports

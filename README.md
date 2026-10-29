@@ -63,12 +63,12 @@ Open a **second terminal**, activate the same virtual environment, and run:
 ```bash
 cd "/Users/rosdash/Documents/Work/rough/github actions"
 source .venv/bin/activate
-python -m robot --outputdir results --xunit xunit.xml tests
+python -m robot --outputdir results tests
 ```
 
 Expect `6 tests, 6 passed, 0 failed`. Open `results/report.html` for the summary
 or `results/log.html` for request details and failure messages. Robot also writes
-`results/output.xml` and `results/xunit.xml` for tools that consume test results.
+`results/output.xml` for tools that consume Robot Framework results.
 
 The suite uses `RequestsLibrary` to check HTTP status codes, HTML, and JSON:
 
@@ -90,7 +90,7 @@ at it:
 python -m flask --app app run --host 127.0.0.1 --port 5002
 
 # Second terminal:
-python -m robot --variable BASE_URL:http://127.0.0.1:5002 --outputdir results --xunit xunit.xml tests
+python -m robot --variable BASE_URL:http://127.0.0.1:5002 --outputdir results tests
 ```
 
 ## Upload to GitHub
@@ -125,15 +125,13 @@ The workflow runs on pushes, pull requests, and manual starts:
 
 1. Checks out the repository and sets up Python 3.13.
 2. Installs `requirements.txt`.
-3. Starts Flask in the background, saving its output to `results/server.log`.
+3. Starts Flask in the background, with its logs visible in the Actions console.
 4. Runs Robot; suite setup waits for the health endpoint before testing.
-5. Stops Flask when the test step finishes, including when tests fail.
-6. Uploads the `results/` folder even if a test fails, retaining it for seven days.
+5. Uploads the `results/` folder even if a test fails, retaining it for seven days.
 
 After uploading, open **Actions → Robot Framework CI** and select a run. Expand
 **Start Flask and run Robot Framework tests** to see the test output. Download
-**robot-test-results** from the run's artifacts and open the HTML reports or
-`server.log`.
+**robot-test-results** from the run's artifacts and open the HTML reports.
 
 For a manual run, use **Run workflow** after the workflow is on the default
 branch. No repository secrets are required. If the workflow does not appear,
